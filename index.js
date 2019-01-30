@@ -40,6 +40,24 @@ const stream = Promise.promisifyAll(nexmo.calls.stream);
 
 const callback = () => console.log("C'est terminé !!");
 
+
+
+// const onInboundCall = (request, response) => {
+//   const ncco = [{
+//     action: 'connect',
+//     endpoint: [{
+//       type: 'phone',
+//       number: "33674585648"
+//     }]
+//   }]
+
+//   response.json(ncco)
+// }
+
+// app.get('/webhooks/answer', onInboundCall)
+
+// app.listen(3000)
+
 // nexmo.message.sendSms("33674596635", "33674585648", "Hello Man 😊", (res) => console.log("Okayy !!"));
 // nexmo.message.sendWapPushMessage("33674596635", "33674585648", "<body>Depanes et <i>moi</i></body>", "https://depannetmoi.homeserve.fr/");
 
@@ -122,90 +140,90 @@ const callback = () => console.log("C'est terminé !!");
  */
 
 
-app.get('/', function (req, res) {
-  res.send('hello');
-});
+// app.get('/', function (req, res) {
+//   res.send('hello');
+// });
 
 // Handle events
-var callId = null;
-app.post('/', function (req, res) {
-  console.log('Request received', req.body);
-  // Hack: seeing two inbound webhook requests.
-  // Use callId to indicate this.
-  if (req.body.status === 'answered' && !callId) {
-    callId = req.body.uuid;
+// var callId = null;
+// app.post('/', function (req, res) {
+//   console.log('Request received', req.body);
+//   // Hack: seeing two inbound webhook requests.
+//   // Use callId to indicate this.
+//   if (req.body.status === 'answered' && !callId) {
+//     callId = req.body.uuid;
 
-    console.log('Call answered with call_uuid', callId)
+//     console.log('Call answered with call_uuid', callId)
 
-    setTimeout(function () {
-      sendTalk(callId);
-    }, 5000);
-  }
+//     setTimeout(function () {
+//       sendTalk(callId);
+//     }, 5000);
+//   }
 
-  res.sendStatus(204);
-});
+//   res.sendStatus(204);
+// });
 
-var server = app.listen(app.get('port'), makeCall);
+// var server = app.listen(app.get('port'), makeCall);
 
-function makeCall() {
-  console.log('Web server listening on port', app.get('port'));
+// function makeCall() {
+//   console.log('Web server listening on port', app.get('port'));
 
-  console.log('calling', config.TO_NUMBER);
-  return calls.createAsync({
-    to: [{
-      type: 'phone',
-      number: config.TO_NUMBER
-    }],
-    from: {
-      type: 'phone',
-      number: config.FROM_NUMBER
-    },
-    answer_url: ['https://nexmo-community.github.io/ncco-examples/conference.json'],
-    event_url: ["http://localhost:3000/"]
-  });
-}
+//   console.log('calling', config.TO_NUMBER);
+//   return calls.createAsync({
+//     to: [{
+//       type: 'phone',
+//       number: config.TO_NUMBER
+//     }],
+//     from: {
+//       type: 'phone',
+//       number: config.FROM_NUMBER
+//     },
+//     answer_url: ['https://nexmo-community.github.io/ncco-examples/conference.json'],
+//     event_url: ["http://localhost:3000/"]
+//   });
+// }
 
-function sendTalk(callId) {
-  console.log('Sending a talk into the call')
-  return talk.startAsync(callId, {
-    text: "Sean... He's on the beach now, a toe in the water. He's asking you to come in with him. He's been racing his mother up and down the sand. There's so much love in this house. He's ten years old. He's surrounded by animals. He wants to be a vet. You keep a rabbit for him, a bird and a fox. He's in high school. He likes to run, like his father.",
-    voice_name: 'Emma',
-    loop: 0
-  })
-    .then(function (resp) {
-      console.log('talk.start response', resp);
+// function sendTalk(callId) {
+//   console.log('Sending a talk into the call')
+//   return talk.startAsync(callId, {
+//     text: "Sean... He's on the beach now, a toe in the water. He's asking you to come in with him. He's been racing his mother up and down the sand. There's so much love in this house. He's ten years old. He's surrounded by animals. He wants to be a vet. You keep a rabbit for him, a bird and a fox. He's in high school. He likes to run, like his father.",
+//     voice_name: 'Emma',
+//     loop: 0
+//   })
+//     .then(function (resp) {
+//       console.log('talk.start response', resp);
 
-      console.log('waiting a short time');
-      return Promise.delay(5000);
-    })
-    .then(function () {
-      console.log(SPACER, 'Stopping talking');
+//       console.log('waiting a short time');
+//       return Promise.delay(5000);
+//     })
+//     .then(function () {
+//       console.log(SPACER, 'Stopping talking');
 
-      return talk.stopAsync(callId);
-    })
-    .then(function (res) {
-      console.log('talk.stop res', res);
+//       return talk.stopAsync(callId);
+//     })
+//     .then(function (res) {
+//       console.log('talk.stop res', res);
 
-      return calls.updateAsync(callId, { action: 'hangup' });
-    })
-    .then(function (res) {
-      console.log('calls.update', res);
+//       return calls.updateAsync(callId, { action: 'hangup' });
+//     })
+//     .then(function (res) {
+//       console.log('calls.update', res);
 
-      server.close();
-      ngrok.kill();
+//       server.close();
+//       ngrok.kill();
 
-      return Promise.delay(2000);
-    })
-    .then(function () {
-      callback(null, null);
-    })
-    .catch(function (err) {
-      if (server) server.close();
-      if (ngrok) ngrok.kill();
+//       return Promise.delay(2000);
+//     })
+//     .then(function () {
+//       callback(null, null);
+//     })
+//     .catch(function (err) {
+//       if (server) server.close();
+//       if (ngrok) ngrok.kill();
 
-      callback(err);
-    });
-}
+//       callback(err);
+//     });
+// }
 
 
 
