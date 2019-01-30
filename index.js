@@ -18,11 +18,37 @@ const nexmo = new Nexmo(
   { debug: true }
 );
 
+// nexmo.message.sendSms("33674596635", "33674585648", "Hello Man 😊", (res) => console.log("Okayy !!"));
+// nexmo.message.sendWapPushMessage("33674596635", "33674585648", "<body>Depanes et <i>moi</i></body>", "https://depannetmoi.homeserve.fr/");
+
+
+nexmo.calls.create({
+  to: [{
+    type: 'phone',
+    number: "33674585648"
+  }],
+  from: {
+    type: 'phone',
+    number: "33427786856"
+  },
+  answer_url: ['https://nexmo-community.github.io/ncco-examples/first_call_talk.json']
+}, () => console.log("Okayy")
+);
+
+
+// The fundamental building block of the Voice API is an NCCO, the Nexmo Call Control Object.
+//  This is a set of instructions that control the flow of a call, 
+//  and is downloaded by Nexmo from your answer URL. 
+
+//  You must host this answer URL on your web server.
+// Exemple: https://developer.nexmo.com/ncco/tts.json
+// Playground: https://dashboard.nexmo.com/voice/playground/test
+
 // nexmo.calls.create({
 //   to: [
 //     {
 //       type: "phone",
-//       number: "33665267940"
+//       number: "0674585648"
 //     }
 //   ],
 //   from: {
@@ -32,30 +58,30 @@ const nexmo = new Nexmo(
 //   answer_url: ["https://developer.nexmo.com/ncco/tts.json"]
 // });
 
-nexmo.calls.create(
-  {
-    to: [
-      {
-        type: "phone",
-        number: "33689543496" // take a phone number from command line argument
-      }
-    ],
-    from: {
-      type: "phone",
-      number: "0674585648" // your virtual number
-    },
-    answer_url: [
-      "https://nexmo-community.github.io/ncco-examples/first_call_talk.json"
-    ]
-  },
-  (err, res) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(res);
-    }
-  }
-);
+// nexmo.calls.create(
+//   {
+//     to: [
+//       {
+//         type: "phone",
+//         number: "33689543496" // take a phone number from command line argument
+//       }
+//     ],
+//     from: {
+//       type: "phone",
+//       number: "0674585648" // your virtual number
+//     },
+//     answer_url: [
+//       "https://nexmo-community.github.io/ncco-examples/first_call_talk.json"
+//     ]
+//   },
+//   (err, res) => {
+//     if (err) {
+//       console.error(err);
+//     } else {
+//       console.log(res);
+//     }
+//   }
+// );
 
 // const onInboundCall = (request, response) => {
 //   const ncco = [

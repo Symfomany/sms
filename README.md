@@ -1,5 +1,12 @@
 # Links
 
+
+## Big documentation
+https://developer.nexmo.com/documentation
+
+API
+https://developer.nexmo.com/voice/voice-api/building-blocks/connect-an-inbound-call
+
 https://github.com/nexmo-community/ncco-examples/blob/gh-pages/conference.json
 
 https://dashboard.nexmo.com/getting-started-guide
