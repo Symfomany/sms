@@ -1,17 +1,17 @@
 [
-    {
-        "action": "talk",
-        "text": "Quelqu'un veut te parler... Attends un peu..."
-    },
-    {
-        "action": "connect",
-        "timeout": 20,
-        "from": "33427786856",
-        "endpoint": [
-            {
-                "type": "phone",
-                "number": "33427786856"
-            }
-        ]
-    }
+  {
+    "action": "talk",
+    "text": "Quelqu'un veut te parler... Attends un peu..."
+  },
+  {
+    "action": "connect",
+    "timeout": 20,
+    "from": "33427786856",
+    "endpoint": [
+      {
+        "type": "phone",
+        "number": "33665267940"
+      }
+    ]
+  }
 ]

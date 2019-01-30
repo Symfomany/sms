@@ -6,20 +6,19 @@
 // "answer_url":["https://nexmo-community.github.io/ncco-examples/first_call_talk.json"]}'
 const Nexmo = require("nexmo");
 const app = require("express")();
-const bodyParser = require('body-parser')
-
+const bodyParser = require("body-parser");
 
 // parse application/json
-app.use(bodyParser.json())
-app.set('port', (process.env.PORT || 3000));
+app.use(bodyParser.json());
+app.set("port", process.env.PORT || 3000);
 const privateKey = require("fs").readFileSync("privat.key");
 // console.log(privateKey);
 
-const Promise = require('bluebird');
-const ngrok = require('ngrok');
-const SPACER = '\n****\n\n';
+const Promise = require("bluebird");
+const ngrok = require("ngrok");
+const SPACER = "\n****\n\n";
 
-const config = require('./config.js');
+const config = require("./config.js");
 
 /**
  * Initiation
@@ -34,25 +33,26 @@ const nexmo = new Nexmo(
   { debug: true }
 );
 
-
 const calls = Promise.promisifyAll(nexmo.calls);
 const stream = Promise.promisifyAll(nexmo.calls.stream);
 
 const callback = () => console.log("C'est terminé !!");
 
-
-
 nexmo.calls.create({
-  to: [{
-    type: 'phone',
-    number: "33674585648"
-  }],
+  to: [
+    {
+      type: "phone",
+      number: "33674585648"
+    }
+  ],
   from: {
-    type: 'phone',
+    type: "phone",
     number: "33644637456"
   },
-  answer_url: ['https://raw.githubusercontent.com/Symfomany/sms/master/conversation.json']
-})
+  answer_url: [
+    "https://raw.githubusercontent.com/Symfomany/sms/master/conversation.json"
+  ]
+});
 
 // const onInboundCall = (request, response) => {
 //   const ncco = [{
@@ -86,8 +86,6 @@ nexmo.calls.create({
 //   }
 // });
 
-
-
 // const REQUEST_ID = process.argv[2];
 // if (!REQUEST_ID) {
 //   console.error('Please supply the `request_id`');
@@ -110,8 +108,6 @@ nexmo.calls.create({
 //     console.log(result);
 //   }
 // });
-
-
 
 // nexmo.calls.create({
 //   to: [{
@@ -144,13 +140,9 @@ nexmo.calls.create({
 //     }
 //   });
 
-
-
-
 /**
  * Stream 1
  */
-
 
 // app.get('/', function (req, res) {
 //   res.send('hello');
@@ -236,15 +228,6 @@ nexmo.calls.create({
 //       callback(err);
 //     });
 // }
-
-
-
-
-
-
-
-
-
 
 /*
 Streams.. 2
@@ -361,14 +344,9 @@ function sendStream(callId) {
 }
 */
 
-
-
-
-
-
 // The fundamental building block of the Voice API is an NCCO, the Nexmo Call Control Object.
-//  This is a set of instructions that control the flow of a call, 
-//  and is downloaded by Nexmo from your answer URL. 
+//  This is a set of instructions that control the flow of a call,
+//  and is downloaded by Nexmo from your answer URL.
 
 //  You must host this answer URL on your web server.
 // Exemple: https://developer.nexmo.com/ncco/tts.json
