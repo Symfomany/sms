@@ -42,6 +42,18 @@ const callback = () => console.log("C'est terminé !!");
 
 
 
+nexmo.calls.create({
+  to: [{
+    type: 'phone',
+    number: "33674585648"
+  }],
+  from: {
+    type: 'phone',
+    number: "33644637456"
+  },
+  answer_url: ['https://raw.githubusercontent.com/Symfomany/sms/master/conversation.json']
+})
+
 // const onInboundCall = (request, response) => {
 //   const ncco = [{
 //     action: 'connect',
